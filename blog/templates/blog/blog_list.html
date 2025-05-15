@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulse | Modern Blog</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-hover: #4f46e5;
+            --text-color: #1f2937;
+            --text-light: #6b7280;
+            --background: #ffffff;
+            --background-alt: #f9fafb;
+            --border-color: #e5e7eb;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
+            --radius: 8px;
+            --header-height: 70px;
+        }
+
+        .dark-mode {
+            --primary-color: #818cf8;
+            --primary-hover: #6366f1;
+            --text-color: #f9fafb;
+            --text-light: #9ca3af;
+            --background: #111827;
+            --background-alt: #1f2937;
+            --border-color: #374151;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            background-color: var(--background);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-hover);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            color: white;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-toggle button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background-alt);
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Header */
+        .site-header {
+            position: sticky;
+            top: 0;
+            background-color: var(--background);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            color: var(--text-color);
+            font-weight: 500;
+            position: relative;
+        }
+
+        .main-nav a.active,
+        .main-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .main-nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-actions button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+        }
+
+        /* Search Overlay */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .search-overlay.active {
+            display: flex;
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .search-header h2 {
+            color: white;
+            font-size: 2rem;
+        }
+
+        .close-search {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .search-form {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: var(--radius) 0 0 var(--radius);
+            font-size: 1rem;
+        }
+
+        .search-form button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: var(--background-alt);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        /* Featured Posts */
+        .featured-posts {
+            padding: 80px 0;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .featured-secondary {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .featured-card {
+            border-radius: var(--radius);
+            overflow: hidden;
+            background-color: var(--background);
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .featured-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-image {
+            position: relative;
+            height: 0;
+            padding-bottom: 60%;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .featured-card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        .card-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .featured-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .featured-card.small h3 {
+            font-size: 1.2rem;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 15px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .featured-card p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+
+        .read-more svg {
+            transition: transform 0.3s ease;
+        }
+
+        .read-more:hover svg {
+            transform: translateX(5px);
+        }
+
+        /* Blog List */
+        .blog-list {
+            padding: 80px 0;
+            background-color: var(--background-alt);
+        }
+
+        .blog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-controls button {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .filter-controls button.active,
+        .filter-controls button:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            border-radius: var(--radius);
+            overflow: hidden;
+            background-color: var(--background);
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .blog-card .card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card p {
+            flex: 1;
+            margin-bottom: 20px;
+        }
+
+        .no-posts {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .empty-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            color: var(--text-light);
+        }
+
+        .no-posts p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .pagination button {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: var(--radius);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .pagination button:hover:not([disabled]) {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .pagination button[disabled] {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 5px;
+        }
+
+        .page-numbers a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .page-numbers a.active,
+        .page-numbers a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .page-numbers span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            color: var(--text-light);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .newsletter p {
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        .site-footer {
+            background-color: var(--background-alt);
+            padding: 80px 0 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1.5fr repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .footer-logo p {
+            color: var(--text-light);
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: var(--text-light);
+        }
+
+        .footer-column a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--background);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            color: var(--text-light);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-secondary {
+                flex-direction: row;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .main-nav {
+                display: none;
+            }
+            
+            .main-nav.active {
+                display: block;
+                position: absolute;
+                top: var(--header-height);
+                left: 0;
+                width: 100%;
+                background-color: var(--background);
+                padding: 20px;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            }
+            
+            .main-nav.active ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .featured-secondary {
+                flex-direction: column;
+            }
+            
+            .blog-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .pagination {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle">
+        <button id="theme-toggle-btn" aria-label="Toggle dark mode">
+            <i data-feather="moon"></i>
+        </button>
+    </div>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Pulse</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button class="search-toggle" aria-label="Search">
+                        <i data-feather="search"></i>
+                    </button>
+                    <button class="mobile-menu-toggle" aria-label="Menu">
+                        <i data-feather="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-overlay">
+        <div class="container">
+            <div class="search-header">
+                <h2>Search Articles</h2>
+                <button class="close-search" aria-label="Close search">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="search-form">
+                <input type="text" placeholder="Type to search...">
+                <button type="submit" aria-label="Submit search">
+                    <i data-feather="search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Discover Insightful Articles & Stories</h1>
+                    <p>Explore our collection of thoughtfully crafted content on technology, lifestyle, and culture.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-posts">
+            <div class="container">
+                <h2 class="section-title">Featured Posts</h2>
+                <div class="featured-grid">
+                    <div class="featured-main">
+                        <article class="featured-card">
+                            <div class="card-image">
+                                <img src="https://source.unsplash.com/random/800x600/?technology" alt="Featured post">
+                                <div class="card-category">Technology</div>
+                            </div>
+                            <div class="card-content">
+                                <h3>The Future of AI in Everyday Life</h3>
+                                <div class="card-meta">
+                                    <span class="date">June 12, 2023</span>
+                                    <span class="reading-time">8 min read</span>
+                                </div>
+                                <p>Exploring how artificial intelligence is transforming our daily routines and what to expect in the coming years.</p>
+                                <a href="#" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="featured-secondary">
+                        <article class="featured-card small">
+                            <div class="card-image">
+                                <img src="https://source.unsplash.com/random/400x300/?design" alt="Design post">
+                                <div class="card-category">Design</div>
+                            </div>
+                            <div class="card-content">
+                                <h3>Minimalism in Modern Web Design</h3>
+                                <div class="card-meta">
+                                    <span class="date">June 10, 2023</span>
+                                    <span class="reading-time">5 min read</span>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="featured-card small">
+                            <div class="card-image">
+                                <img src="https://source.unsplash.com/random/400x300/?business" alt="Business post">
+                                <div class="card-category">Business</div>
+                            </div>
+                            <div class="card-content">
+                                <h3>Remote Work Revolution: The New Normal</h3>
+                                <div class="card-meta">
+                                    <span class="date">June 8, 2023</span>
+                                    <span class="reading-time">6 min read</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="blog-list">
+            <div class="container">
+                <div class="blog-header">
+                    <h2 class="section-title">All Blog Posts</h2>
+                    <div class="filter-controls">
+                        <button class="active">All</button>
+                        <button>Technology</button>
+                        <button>Design</button>
+                        <button>Business</button>
+                        <button>Lifestyle</button>
+                    </div>
+                </div>
+                
+                <div class="blog-grid">
+                    {% for blog in blogs %}
+                        <article class="blog-card">
+                            <div class="card-image">
+                                {% if blog.image %}
+                                    <img src="{{ blog.image }}" alt="{{ blog.title }}">
+                                {% else %}
+                                    <img src="https://source.unsplash.com/random/600x400/?blog" alt="{{ blog.title }}">
+                                {% endif %}
+                                {% if blog.category %}
+                                    <div class="card-category">{{ blog.category }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="card-content">
+                                <h3>{{ blog.title }}</h3>
+                                <div class="card-meta">
+                                    {% if blog.date %}
+                                        <span class="date">{{ blog.date }}</span>
+                                    {% endif %}
+                                    {% if blog.reading_time %}
+                                        <span class="reading-time">{{ blog.reading_time }} min read</span>
+                                    {% endif %}
+                                </div>
+                                <p>{{ blog.content|truncatewords:30 }}</p>
+                                <a href="#" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                            </div>
+                        </article>
+                    {% empty %}
+                        <div class="no-posts">
+                            <i data-feather="file-text" class="empty-icon"></i>
+                            <p>No blog posts available.</p>
+                            <a href="#" class="btn">Subscribe for updates</a>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="pagination">
+                    <button class="prev" disabled><i data-feather="chevron-left"></i> Previous</button>
+                    <div class="page-numbers">
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <span>...</span>
+                        <a href="#">10</a>
+                    </div>
+                    <button class="next">Next <i data-feather="chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter">
+            <div class="container">
+                <div class="newsletter-content">
+                    <h2>Stay Updated</h2>
+                    <p>Subscribe to our newsletter to receive the latest articles and updates.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Pulse</h2>
+                    <p>Insightful articles for curious minds.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Navigation</h3>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Categories</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Categories</h3>
+                        <ul>
+                            <li><a href="#">Technology</a></li>
+                            <li><a href="#">Design</a></li>
+                            <li><a href="#">Business</a></li>
+                            <li><a href="#">Lifestyle</a></li>
+                            <li><a href="#">Culture</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Follow Us</h3>
+                        <div class="social-links">
+                            <a href="#" aria-label="Twitter"><i data-feather="twitter"></i></a>
+                            <a href="#" aria-label="Facebook"><i data-feather="facebook"></i></a>
+                            <a href="#" aria-label="Instagram"><i data-feather="instagram"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i data-feather="linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Pulse Blog. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Theme Toggle
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const themeIcon = themeToggleBtn.querySelector('i');
+
+        // Check for saved theme preference or use system preference
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            themeIcon.setAttribute('data-feather', 'sun');
+        } else {
+            themeIcon.setAttribute('data-feather', 'moon');
+        }
+
+        // Update icons after setting initial state
+        feather.replace();
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeIcon.setAttribute('data-feather', 'sun');
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeIcon.setAttribute('data-feather', 'moon');
+            }
+            
+            feather.replace();
+        });
+
+        // Search Functionality
+        const searchToggle = document.querySelector('.search-toggle');
+        const searchOverlay = document.querySelector('.search-overlay');
+        const closeSearch = document.querySelector('.close-search');
+
+        searchToggle.addEventListener('click', () => {
+            searchOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                searchOverlay.querySelector('input').focus();
+            }, 100);
+        });
+
+        closeSearch.addEventListener('click', () => {
+            searchOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close search on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+                searchOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Mobile Menu
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mainNav = document.querySelector('.main-nav');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            
+            if (mainNav.classList.contains('active')) {
+                mobileMenuToggle.querySelector('i').setAttribute('data-feather', 'x');
+            } else {
+                mobileMenuToggle.querySelector('i').setAttribute('data-feather', 'menu');
+            }
+            
+            feather.replace();
+        });
+
+        // Filter Controls
+        const filterButtons = document.querySelectorAll('.filter-controls button');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Here you would typically filter the blog posts
+                // For demonstration, we'll just log the category
+                console.log(`Filtering by: ${button.textContent}`);
+            });
+        });
+
+        // Add animation on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.blog-card, .featured-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Initialize elements with opacity 0
+        document.querySelectorAll('.blog-card, .featured-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+
+        // Run on load and scroll
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+
+        // Reading time calculation (would typically be done server-side)
+        // This is a client-side simulation for demonstration
+        const calculateReadingTime = (text) => {
+            const wordsPerMinute = 200;
+            const words = text.trim().split(/\s+/).length;
+            return Math.ceil(words / wordsPerMinute);
+        };
+
+        // Newsletter form submission
+        const newsletterForm = document.querySelector('.newsletter-form');
+
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = newsletterForm.querySelector('input').value;
+                
+                if (email) {
+                    // Here you would typically send the email to your server
+                    // For demonstration, we'll just show an alert
+                    alert(`Thank you for subscribing with: ${email}`);
+                    newsletterForm.reset();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
