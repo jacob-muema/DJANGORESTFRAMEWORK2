@@ -148,7 +148,7 @@ This project is for educational and demonstration purposes under industrial trai
 
 
 
-Want a `requirements.txt` generated automatically for your project? Just say the word.
+
 
 A modern, responsive blog platform built using **Django** and **Django REST Framework**, developed during my industrial attachment at **Masyopnet Technologies**.  
 This lightweight web app includes core functionality for user registration, login, and blog posting — all styled with a sleek UI inspired by top tech media sites.
