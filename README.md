@@ -1,6 +1,3 @@
-Absolutely, Jacob — I’ve got you covered. Here's your **100% ready-to-paste `README.md`** tailored for your GitHub username and your project at **Masyopnet Technologies**.
-
----
 
 ```markdown
 # 📰 TechPulse Blog — Django RESTful API Project
@@ -8,9 +5,6 @@ Absolutely, Jacob — I’ve got you covered. Here's your **100% ready-to-paste 
 A modern, responsive blog platform built using **Django** and **Django REST Framework**, developed during my industrial attachment at **Masyopnet Technologies**.  
 This lightweight web app includes core functionality for user registration, login, and blog posting — all styled with a sleek UI inspired by top tech media sites.
 
-![Register Page](https://github.com/user-attachments/assets/75706799-b7b4-4b92-aded-7ecb71ca0e33)
-![Login Page](https://github.com/user-attachments/assets/9d304678-84e1-48f3-9d78-0694d1836456)
-![Blog Page](https://github.com/user-attachments/assets/e16c405e-1e1f-44d7-b6ed-d54590751c01)
 
 ---
 
