@@ -1,69 +1,530 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register</title>
   <style>
+    :root {
+      --primary-color: #4361ee;
+      --primary-hover: #3a56d4;
+      --text-color: #333;
+      --light-gray: #f8f9fa;
+      --border-color: #e0e0e0;
+      --error-color: #e63946;
+      --success-color: #2ecc71;
+      --warning-color: #f39c12;
+      --weak-color: #e74c3c;
+      --medium-color: #f39c12;
+      --strong-color: #2ecc71;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
     body {
-      font-family: sans-serif;
-      background-color: #f2f2f2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: var(--text-color);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 20px;
     }
+    
     .card {
       background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       width: 100%;
-      max-width: 400px;
+      max-width: 450px;
+      transition: transform 0.3s ease;
     }
+    
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    
     .card h2 {
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       text-align: center;
+      color: var(--text-color);
+      font-weight: 600;
+      font-size: 1.75rem;
     }
+    
     .form-group {
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      position: relative;
     }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+    
     input[type="text"],
     input[type="email"],
     input[type="password"] {
       width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
+    
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+    }
+    
     button {
       width: 100%;
-      padding: 0.6rem;
-      background: #4CAF50;
+      padding: 0.85rem;
+      background: var(--primary-color);
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background 0.3s, transform 0.2s;
+      margin-top: 0.5rem;
     }
+    
     button:hover {
-      background: #45a049;
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    .login-link {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+    }
+    
+    .login-link a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    .login-link a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+    
+    .error-message {
+      color: var(--error-color);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+    
+    /* Password strength meter styles */
+    .password-container {
+      position: relative;
+    }
+    
+    .password-strength-meter {
+      height: 4px;
+      width: 100%;
+      background-color: #ddd;
+      position: relative;
+      margin-top: 8px;
+      border-radius: 2px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .password-strength-meter-fill {
+      height: 100%;
+      width: 0;
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+    
+    .password-strength-text {
+      font-size: 0.8rem;
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .strength-label {
+      font-weight: 500;
+    }
+    
+    .password-requirements {
+      margin-top: 12px;
+      padding: 12px;
+      background-color: var(--light-gray);
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+    
+    .requirement {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      color: #777;
+      transition: color 0.3s ease;
+    }
+    
+    .requirement:last-child {
+      margin-bottom: 0;
+    }
+    
+    .requirement.valid {
+      color: var(--success-color);
+    }
+    
+    .requirement-icon {
+      margin-right: 8px;
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 10px;
+      color: white;
+    }
+    
+    .requirement-icon.invalid {
+      background-color: #ddd;
+    }
+    
+    .requirement-icon.valid {
+      background-color: var(--success-color);
+    }
+    
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #777;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+    }
+    
+    .password-field-container {
+      position: relative;
+    }
+    
+    @media (max-width: 480px) {
+      .card {
+        padding: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="card">
     <h2>Create an Account</h2>
-    <form method="POST">
+    <form method="POST" id="registerForm">
       {% csrf_token %}
       {% for field in form %}
         <div class="form-group">
           {{ field.label_tag }}
-          {{ field }}
+          
+          {% if field.name == 'password1' %}
+            <div class="password-field-container">
+              {{ field }}
+              <button type="button" class="password-toggle" id="togglePassword">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            <div class="password-strength-meter">
+              <div class="password-strength-meter-fill" id="strengthMeter"></div>
+            </div>
+            <div class="password-strength-text">
+              <span class="strength-label" id="strengthText">Password strength</span>
+              <span id="strengthPercent">0%</span>
+            </div>
+            <div class="password-requirements">
+              <div class="requirement" id="length">
+                <span class="requirement-icon invalid">✓</span>
+                <span>At least 8 characters</span>
+              </div>
+              <div class="requirement" id="uppercase">
+                <span class="requirement-icon invalid">✓</span>
+                <span>At least one uppercase letter</span>
+              </div>
+              <div class="requirement" id="lowercase">
+                <span class="requirement-icon invalid">✓</span>
+                <span>At least one lowercase letter</span>
+              </div>
+              <div class="requirement" id="number">
+                <span class="requirement-icon invalid">✓</span>
+                <span>At least one number</span>
+              </div>
+              <div class="requirement" id="special">
+                <span class="requirement-icon invalid">✓</span>
+                <span>At least one special character</span>
+              </div>
+            </div>
+          {% elif field.name == 'password2' %}
+            <div class="password-field-container">
+              {{ field }}
+              <button type="button" class="password-toggle" id="toggleConfirmPassword">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            <div id="passwordMatch" class="error-message" style="display: none;">Passwords do not match</div>
+          {% else %}
+            {{ field }}
+          {% endif %}
+          
           {% if field.errors %}
-            <p style="color: red;">{{ field.errors }}</p>
+            <p class="error-message">{{ field.errors }}</p>
           {% endif %}
         </div>
       {% endfor %}
-      <button type="submit">Register</button>
+      <button type="submit" id="submitBtn">Sign Up</button>
     </form>
+    <div class="login-link">
+      <p>Already have an account? <a href="/blog/login/">Sign in</a></p>
+    </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Card animation
+      const card = document.querySelector('.card');
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 100);
+      
+      // Focus the first input field
+      const firstInput = document.querySelector('input');
+      if (firstInput) {
+        firstInput.focus();
+      }
+      
+      // Password visibility toggle
+      const togglePassword = document.getElementById('togglePassword');
+      const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+      const passwordField = document.querySelector('input[name="password1"]');
+      const confirmPasswordField = document.querySelector('input[name="password2"]');
+      
+      if (togglePassword && passwordField) {
+        togglePassword.addEventListener('click', function() {
+          const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+          passwordField.setAttribute('type', type);
+          
+          // Change the eye icon
+          this.innerHTML = type === 'password' ? 
+            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>' : 
+            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+        });
+      }
+      
+      if (toggleConfirmPassword && confirmPasswordField) {
+        toggleConfirmPassword.addEventListener('click', function() {
+          const type = confirmPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
+          confirmPasswordField.setAttribute('type', type);
+          
+          // Change the eye icon
+          this.innerHTML = type === 'password' ? 
+            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>' : 
+            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+        });
+      }
+      
+      // Password strength meter
+      const strengthMeter = document.getElementById('strengthMeter');
+      const strengthText = document.getElementById('strengthText');
+      const strengthPercent = document.getElementById('strengthPercent');
+      
+      // Password requirements
+      const lengthReq = document.getElementById('length');
+      const uppercaseReq = document.getElementById('uppercase');
+      const lowercaseReq = document.getElementById('lowercase');
+      const numberReq = document.getElementById('number');
+      const specialReq = document.getElementById('special');
+      
+      if (passwordField) {
+        passwordField.addEventListener('input', function() {
+          const password = this.value;
+          let strength = 0;
+          let maxStrength = 5; // Total number of requirements
+          
+          // Check length
+          if (password.length >= 8) {
+            strength++;
+            lengthReq.classList.add('valid');
+            lengthReq.querySelector('.requirement-icon').classList.add('valid');
+            lengthReq.querySelector('.requirement-icon').classList.remove('invalid');
+          } else {
+            lengthReq.classList.remove('valid');
+            lengthReq.querySelector('.requirement-icon').classList.remove('valid');
+            lengthReq.querySelector('.requirement-icon').classList.add('invalid');
+          }
+          
+          // Check uppercase
+          if (/[A-Z]/.test(password)) {
+            strength++;
+            uppercaseReq.classList.add('valid');
+            uppercaseReq.querySelector('.requirement-icon').classList.add('valid');
+            uppercaseReq.querySelector('.requirement-icon').classList.remove('invalid');
+          } else {
+            uppercaseReq.classList.remove('valid');
+            uppercaseReq.querySelector('.requirement-icon').classList.remove('valid');
+            uppercaseReq.querySelector('.requirement-icon').classList.add('invalid');
+          }
+          
+          // Check lowercase
+          if (/[a-z]/.test(password)) {
+            strength++;
+            lowercaseReq.classList.add('valid');
+            lowercaseReq.querySelector('.requirement-icon').classList.add('valid');
+            lowercaseReq.querySelector('.requirement-icon').classList.remove('invalid');
+          } else {
+            lowercaseReq.classList.remove('valid');
+            lowercaseReq.querySelector('.requirement-icon').classList.remove('valid');
+            lowercaseReq.querySelector('.requirement-icon').classList.add('invalid');
+          }
+          
+          // Check numbers
+          if (/[0-9]/.test(password)) {
+            strength++;
+            numberReq.classList.add('valid');
+            numberReq.querySelector('.requirement-icon').classList.add('valid');
+            numberReq.querySelector('.requirement-icon').classList.remove('invalid');
+          } else {
+            numberReq.classList.remove('valid');
+            numberReq.querySelector('.requirement-icon').classList.remove('valid');
+            numberReq.querySelector('.requirement-icon').classList.add('invalid');
+          }
+          
+          // Check special characters
+          if (/[^A-Za-z0-9]/.test(password)) {
+            strength++;
+            specialReq.classList.add('valid');
+            specialReq.querySelector('.requirement-icon').classList.add('valid');
+            specialReq.querySelector('.requirement-icon').classList.remove('invalid');
+          } else {
+            specialReq.classList.remove('valid');
+            specialReq.querySelector('.requirement-icon').classList.remove('valid');
+            specialReq.querySelector('.requirement-icon').classList.add('invalid');
+          }
+          
+          // Calculate percentage
+          const strengthPercentage = Math.round((strength / maxStrength) * 100);
+          
+          // Update meter
+          strengthMeter.style.width = strengthPercentage + '%';
+          strengthPercent.textContent = strengthPercentage + '%';
+          
+          // Update color and text based on strength
+          if (strengthPercentage < 40) {
+            strengthMeter.style.backgroundColor = 'var(--weak-color)';
+            strengthText.textContent = 'Weak';
+            strengthText.style.color = 'var(--weak-color)';
+          } else if (strengthPercentage < 80) {
+            strengthMeter.style.backgroundColor = 'var(--medium-color)';
+            strengthText.textContent = 'Medium';
+            strengthText.style.color = 'var(--medium-color)';
+          } else {
+            strengthMeter.style.backgroundColor = 'var(--strong-color)';
+            strengthText.textContent = 'Strong';
+            strengthText.style.color = 'var(--strong-color)';
+          }
+          
+          // Check password match if confirm password has value
+          if (confirmPasswordField && confirmPasswordField.value) {
+            checkPasswordMatch();
+          }
+        });
+      }
+      
+      // Check if passwords match
+      function checkPasswordMatch() {
+        const password = passwordField.value;
+        const confirmPassword = confirmPasswordField.value;
+        const passwordMatch = document.getElementById('passwordMatch');
+        
+        if (password === confirmPassword) {
+          passwordMatch.style.display = 'none';
+          confirmPasswordField.style.borderColor = 'var(--success-color)';
+          return true;
+        } else {
+          passwordMatch.style.display = 'block';
+          confirmPasswordField.style.borderColor = 'var(--error-color)';
+          return false;
+        }
+      }
+      
+      if (confirmPasswordField) {
+        confirmPasswordField.addEventListener('input', checkPasswordMatch);
+      }
+      
+      // Form submission validation
+      const registerForm = document.getElementById('registerForm');
+      const submitBtn = document.getElementById('submitBtn');
+      
+      if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+          if (passwordField && confirmPasswordField) {
+            if (!checkPasswordMatch()) {
+              e.preventDefault();
+              return false;
+            }
+            
+            // Check password strength
+            const password = passwordField.value;
+            let validRequirements = 0;
+            
+            if (password.length >= 8) validRequirements++;
+            if (/[A-Z]/.test(password)) validRequirements++;
+            if (/[a-z]/.test(password)) validRequirements++;
+            if (/[0-9]/.test(password)) validRequirements++;
+            if (/[^A-Za-z0-9]/.test(password)) validRequirements++;
+            
+            if (validRequirements < 3) {
+              e.preventDefault();
+              alert('Please create a stronger password');
+              return false;
+            }
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>

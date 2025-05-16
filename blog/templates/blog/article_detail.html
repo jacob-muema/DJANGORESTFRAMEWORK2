@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }} | TechPulse</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        :root {
+            --primary-color: #0a84ff;
+            --primary-hover: #0070e0;
+            --secondary-color: #f43f5e;
+            --text-color: #111827;
+            --text-light: #4b5563;
+            --text-lighter: #6b7280;
+            --background: #ffffff;
+            --background-alt: #f9fafb;
+            --background-card: #ffffff;
+            --border-color: #e5e7eb;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
+            --radius: 8px;
+            --header-height: 70px;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        .dark-mode {
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --secondary-color: #f43f5e;
+            --text-color: #f9fafb;
+            --text-light: #d1d5db;
+            --text-lighter: #9ca3af;
+            --background: #111827;
+            --background-alt: #1f2937;
+            --background-card: #1e293b;
+            --border-color: #374151;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-color);
+            background-color: var(--background);
+            line-height: 1.6;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-hover);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: var(--font-sans);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-toggle button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background-alt);
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Header */
+        .site-header {
+            position: sticky;
+            top: 0;
+            background-color: var(--background);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            color: var(--text-color);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .main-nav a.active,
+        .main-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .main-nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-actions button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .header-actions button:hover {
+            background-color: var(--background-alt);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+        }
+
+        /* Search Overlay */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .search-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .search-header h2 {
+            color: white;
+            font-size: 2rem;
+        }
+
+        .close-search {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .search-form {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: var(--radius) 0 0 var(--radius);
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .search-form button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        /* Article Page Styles */
+        .article-header {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .article-category {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .article-title {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            color: var(--text-light);
+        }
+
+        .article-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .article-author img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .article-author-info {
+            text-align: left;
+        }
+
+        .article-author-name {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .article-date {
+            font-size: 0.9rem;
+        }
+
+        .article-featured-image {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            font-weight: 700;
+        }
+
+        .article-content h3 {
+            font-size: 1.5rem;
+            margin: 1.8rem 0 1rem;
+            font-weight: 700;
+        }
+
+        .article-content ul, 
+        .article-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+        .article-content img {
+            max-width: 100%;
+            border-radius: var(--radius);
+            margin: 2rem 0;
+        }
+
+        .article-content code {
+            background-color: var(--background-alt);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .article-content pre {
+            background-color: var(--background-alt);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .article-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .article-tag {
+            background-color: var(--background-alt);
+            color: var(--text-light);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .article-tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .article-share {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .article-share span {
+            font-weight: 600;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .share-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--background-alt);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .share-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .share-twitter:hover {
+            background-color: #1DA1F2;
+            color: white;
+        }
+
+        .share-facebook:hover {
+            background-color: #4267B2;
+            color: white;
+        }
+
+        .share-linkedin:hover {
+            background-color: #0077B5;
+            color: white;
+        }
+
+        /* Related Articles */
+        .related-articles {
+            padding: 60px 0;
+            background-color: var(--background-alt);
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .comments-count {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .comment {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comment-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .comment-author {
+            font-weight: 600;
+        }
+
+        .comment-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .comment-body {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .comment-action {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .comment-action:hover {
+            color: var(--primary-color);
+        }
+
+        .comment-form {
+            margin-top: 40px;
+        }
+
+        .comment-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            background-color: var(--background-card);
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        .site-footer {
+            background-color: var(--background-alt);
+            padding: 80px 0 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1.5fr repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .footer-logo p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            font-weight: 700;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .footer-column a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--background);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            color: var(--text-light);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .article-title {
+                font-size: 2.5rem;
+            }
+            
+            .related-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+                position: fixed;
+                top: var(--header-height);
+                left: 0;
+                width: 100%;
+                background-color: var(--background);
+                padding: 20px;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                z-index: 99;
+            }
+            
+            .main-nav.active {
+                display: block;
+            }
+            
+            .main-nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .article-title {
+                font-size: 2rem;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .comment {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .footer-bottom-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle">
+        <button id="theme-toggle-btn" aria-label="Toggle dark mode">
+            <i data-feather="moon"></i>
+        </button>
+    </div>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1><a href="{% url 'blog:index' %}">TechPulse</a></h1>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="{% url 'blog:index' %}">Home</a></li>
+                        <li><a href="{% url 'blog:category' 'tech-news' %}">Tech News</a></li>
+                        <li><a href="{% url 'blog:category' 'reviews' %}">Reviews</a></li>
+                        <li><a href="{% url 'blog:category' 'startups' %}">Startups</a></li>
+                        <li><a href="{% url 'blog:category' 'ai' %}">AI</a></li>
+                        <li><a href="{% url 'blog:about' %}">About</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button class="search-toggle" aria-label="Search">
+                        <i data-feather="search"></i>
+                    </button>
+                    <button class="mobile-menu-toggle" aria-label="Menu">
+                        <i data-feather="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-overlay">
+        <div class="container">
+            <div class="search-header">
+                <h2>Search Articles</h2>
+                <button class="close-search" aria-label="Close search">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <form class="search-form" action="{% url 'blog:search' %}" method="get">
+                <input type="text" name="q" placeholder="Type to search..." id="search-input">
+                <button type="submit" aria-label="Submit search">
+                    <i data-feather="search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <main>
+        <article>
+            <header class="article-header">
+                <div class="container">
+                    <a href="{% url 'blog:category' article.category.slug %}" class="article-category">{{ article.category.name }}</a>
+                    <h1 class="article-title">{{ article.title }}</h1>
+                    <div class="article-meta">
+                        <div class="article-author">
+                            <img src="{{ article.author.profile_image.url }}" alt="{{ article.author.name }}">
+                            <div class="article-author-info">
+                                <a href="{% url 'blog:author' article.author.username %}" class="article-author-name">{{ article.author.name }}</a>
+                                <div class="article-date">{{ article.published_date|date:"F j, Y" }}</div>
+                            </div>
+                        </div>
+                        <div class="reading-time">{{ article.reading_time }} min read</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="article-featured-image">
+                <img src="{{ article.featured_image.url }}" alt="{{ article.title }}">
+            </div>
+
+            <div class="article-content">
+                {{ article.content|safe }}
+
+                <div class="article-tags">
+                    {% for tag in article.tags.all %}
+                        <a href="{% url 'blog:tag' tag.slug %}" class="article-tag">{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+
+                <div class="article-share">
+                    <span>Share:</span>
+                    <div class="share-buttons">
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ article.title }}" target="_blank" class="share-button share-twitter" aria-label="Share on Twitter">
+                            <i data-feather="twitter"></i>
+                        </a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="share-button share-facebook" aria-label="Share on Facebook">
+                            <i data-feather="facebook"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ article.title }}" target="_blank" class="share-button share-linkedin" aria-label="Share on LinkedIn">
+                            <i data-feather="linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <section class="related-articles">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Related Articles</h2>
+                    <a href="{% url 'blog:category' article.category.slug %}" class="view-all">View All <i data-feather="arrow-right"></i></a>
+                </div>
+                <div class="related-grid">
+                    {% for related in related_articles %}
+                        <article class="blog-card">
+                            <div class="card-image">
+                                <img src="{{ related.featured_image.url }}" alt="{{ related.title }}">
+                                <div class="card-category">{{ related.category.name }}</div>
+                            </div>
+                            <div class="card-content">
+                                <h3>{{ related.title }}</h3>
+                                <div class="card-meta">
+                                    <div class="author-info">
+                                        <div class="author-avatar">
+                                            <img src="{{ related.author.profile_image.url }}" alt="{{ related.author.name }}">
+                                        </div>
+                                        <span class="author-name">{{ related.author.name }}</span>
+                                    </div>
+                                    <span class="date">{{ related.published_date|date:"F j, Y" }}</span>
+                                </div>
+                                <p>{{ related.excerpt }}</p>
+                                <a href="{% url 'blog:article' related.slug %}" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <section class="comments-section">
+            <div class="comments-header">
+                <h2 class="comments-count">{{ comments.count }} Comments</h2>
+            </div>
+
+            {% for comment in comments %}
+                <div class="comment">
+                    <div class="comment-avatar">
+                        <img src="{{ comment.user.profile_image.url|default:'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg' }}" alt="{{ comment.user.name }}">
+                    </div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <div class="comment-author">{{ comment.user.name }}</div>
+                            <div class="comment-date">{{ comment.created_at|date:"F j, Y" }}</div>
+                        </div>
+                        <div class="comment-body">
+                            {{ comment.content }}
+                        </div>
+                        <div class="comment-actions">
+                            <button class="comment-action" data-comment-id="{{ comment.id }}">
+                                <i data-feather="message-square"></i> Reply
+                            </button>
+                            <button class="comment-action">
+                                <i data-feather="thumbs-up"></i> Like
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Be the first to comment on this article!</p>
+            {% endfor %}
+
+            <div class="comment-form">
+                <h3>Leave a Comment</h3>
+                <form method="post" action="{% url 'blog:add_comment' article.id %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="comment-name">Name</label>
+                        <input type="text" id="comment-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-email">Email</label>
+                        <input type="email" id="comment-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-content">Comment</label>
+                        <textarea id="comment-content" name="content" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Post Comment</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>TechPulse</h2>
+                    <p>Your trusted source for technology news, reviews, and insights.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter"><i data-feather="twitter"></i></a>
+                        <a href="#" aria-label="Facebook"><i data-feather="facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i data-feather="instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i data-feather="linkedin"></i></a>
+                        <a href="#" aria-label="YouTube"><i data-feather="youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="{% url 'blog:index' %}">Home</a></li>
+                        <li><a href="{% url 'blog:category' 'tech-news' %}">Tech News</a></li>
+                        <li><a href="{% url 'blog:category' 'reviews' %}">Reviews</a></li>
+                        <li><a href="{% url 'blog:category' 'startups' %}">Startups</a></li>
+                        <li><a href="{% url 'blog:category' 'ai' %}">AI</a></li>
+                        <li><a href="{% url 'blog:about' %}">About Us</a></li>
+                        <li><a href="{% url 'blog:contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="{% url 'blog:category' 'artificial-intelligence' %}">Artificial Intelligence</a></li>
+                        <li><a href="{% url 'blog:category' 'blockchain-crypto' %}">Blockchain & Crypto</a></li>
+                        <li><a href="{% url 'blog:category' 'cloud-computing' %}">Cloud Computing</a></li>
+                        <li><a href="{% url 'blog:category' 'cybersecurity' %}">Cybersecurity</a></li>
+                        <li><a href="{% url 'blog:category' 'gadgets-hardware' %}">Gadgets & Hardware</a></li>
+                        <li><a href="{% url 'blog:category' 'software-apps' %}">Software & Apps</a></li>
+                        <li><a href="{% url 'blog:category' 'startups-vc' %}">Startups & VC</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="{% url 'blog:guides' %}">Tech Guides</a></li>
+                        <li><a href="{% url 'blog:podcasts' %}">Podcasts</a></li>
+                        <li><a href="{% url 'blog:newsletters' %}">Newsletters</a></li>
+                        <li><a href="{% url 'blog:events' %}">Events</a></li>
+                        <li><a href="{% url 'blog:advertise' %}">Advertise</a></li>
+                        <li><a href="{% url 'blog:careers' %}">Careers</a></li>
+                        <li><a href="{% url 'blog:press-kit' %}">Press Kit</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TechPulse. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="{% url 'blog:privacy-policy' %}">Privacy Policy</a>
+                    <a href="{% url 'blog:terms-of-service' %}">Terms of Service</a>
+                    <a href="{% url 'blog:cookie-policy' %}">Cookie Policy</a>
+                    <a href="{% url 'blog:accessibility' %}">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Theme Toggle
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const themeIcon = themeToggleBtn.querySelector('i');
+
+        // Check for saved theme preference or use system preference
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const currentTheme = localStorage.getItem('theme');
+
+        function setTheme(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                themeIcon.setAttribute('data-feather', 'sun');
+            } else {
+                document.body.classList.remove('dark-mode');
+                themeIcon.setAttribute('data-feather', 'moon');
+            }
+            feather.replace();
+        }
+
+        // Set initial theme
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        // Toggle theme on button click
+        themeToggleBtn.addEventListener('click', () => {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            setTheme(!isDarkMode);
+            localStorage.setItem('theme', isDarkMode ? 'light' : 'dark');
+        });
+
+        // Search Functionality
+        const searchToggle = document.querySelector('.search-toggle');
+        const searchOverlay = document.querySelector('.search-overlay');
+        const closeSearch = document.querySelector('.close-search');
+        const searchInput = document.getElementById('search-input');
+
+        searchToggle.addEventListener('click', () => {
+            searchOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                searchInput.focus();
+            }, 100);
+        });
+
+        closeSearch.addEventListener('click', () => {
+            searchOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close search on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+                searchOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Mobile Menu
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mainNav = document.querySelector('.main-nav');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            
+            if (mainNav.classList.contains('active')) {
+                mobileMenuToggle.querySelector('i').setAttribute('data-feather', 'x');
+            } else {
+                mobileMenuToggle.querySelector('i').setAttribute('data-feather', 'menu');
+            }
+            
+            feather.replace();
+        });
+
+        // Comment Reply Functionality
+        const replyButtons = document.querySelectorAll('.comment-action[data-comment-id]');
+        
+        replyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const commentId = button.getAttribute('data-comment-id');
+                const commentForm = document.querySelector('.comment-form');
+                
+                // Scroll to comment form
+                commentForm.scrollIntoView({ behavior: 'smooth' });
+                
+                // Focus on the comment textarea
+                setTimeout(() => {
+                    document.getElementById('comment-content').focus();
+                }, 500);
+                
+                // Add a hidden input to indicate this is a reply
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'parent_id';
+                hiddenInput.value = commentId;
+                
+                // Remove any existing hidden input
+                const existingInput = commentForm.querySelector('input[name="parent_id"]');
+                if (existingInput) {
+                    existingInput.remove();
+                }
+                
+                // Add the new hidden input
+                commentForm.querySelector('form').appendChild(hiddenInput);
+                
+                // Update the form title
+                commentForm.querySelector('h3').textContent = 'Leave a Reply';
+            });
+        });
+    </script>
+</body>
+</html>

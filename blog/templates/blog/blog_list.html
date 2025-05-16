@@ -3,31 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pulse | Modern Blog</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <title>TechPulse | Technology News & Insights</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
     <script src="https://unpkg.com/feather-icons"></script>
     <style>
         :root {
-            --primary-color: #6366f1;
-            --primary-hover: #4f46e5;
-            --text-color: #1f2937;
-            --text-light: #6b7280;
+            --primary-color: #0a84ff;
+            --primary-hover: #0070e0;
+            --secondary-color: #f43f5e;
+            --text-color: #111827;
+            --text-light: #4b5563;
+            --text-lighter: #6b7280;
             --background: #ffffff;
             --background-alt: #f9fafb;
+            --background-card: #ffffff;
             --border-color: #e5e7eb;
             --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --transition: all 0.3s ease;
             --radius: 8px;
             --header-height: 70px;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
         .dark-mode {
-            --primary-color: #818cf8;
-            --primary-hover: #6366f1;
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --secondary-color: #f43f5e;
             --text-color: #f9fafb;
-            --text-light: #9ca3af;
+            --text-light: #d1d5db;
+            --text-lighter: #9ca3af;
             --background: #111827;
             --background-alt: #1f2937;
+            --background-card: #1e293b;
             --border-color: #374151;
             --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
         }
@@ -39,16 +46,17 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-sans);
             color: var(--text-color);
             background-color: var(--background);
             line-height: 1.6;
             transition: var(--transition);
+            overflow-x: hidden;
         }
 
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -71,7 +79,7 @@
 
         button {
             cursor: pointer;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-sans);
         }
 
         .btn {
@@ -89,6 +97,26 @@
 
         .btn:hover {
             background-color: var(--primary-hover);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e11d48;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
             color: white;
         }
 
@@ -134,8 +162,9 @@
 
         .logo h1 {
             font-size: 1.8rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--primary-color);
+            letter-spacing: -0.5px;
         }
 
         .main-nav ul {
@@ -148,6 +177,7 @@
             color: var(--text-color);
             font-weight: 500;
             position: relative;
+            padding: 5px 0;
         }
 
         .main-nav a.active,
@@ -158,7 +188,7 @@
         .main-nav a.active::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: -2px;
             left: 0;
             width: 100%;
             height: 2px;
@@ -168,6 +198,7 @@
         .header-actions {
             display: flex;
             gap: 15px;
+            align-items: center;
         }
 
         .header-actions button {
@@ -177,6 +208,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 8px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .header-actions button:hover {
+            background-color: var(--background-alt);
         }
 
         .mobile-menu-toggle {
@@ -196,10 +234,13 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .search-overlay.active {
             display: flex;
+            opacity: 1;
         }
 
         .search-header {
@@ -219,6 +260,7 @@
             border: none;
             color: white;
             font-size: 1.5rem;
+            cursor: pointer;
         }
 
         .search-form {
@@ -233,6 +275,7 @@
             border: none;
             border-radius: var(--radius) 0 0 var(--radius);
             font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.9);
         }
 
         .search-form button {
@@ -243,48 +286,141 @@
             border-radius: 0 var(--radius) var(--radius) 0;
         }
 
+        /* Breaking News Ticker */
+        .breaking-news {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 0;
+            overflow: hidden;
+        }
+
+        .ticker-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .ticker-label {
+            background-color: var(--secondary-color);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-right: 15px;
+            white-space: nowrap;
+        }
+
+        .ticker-wrapper {
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .ticker {
+            display: flex;
+            animation: ticker 30s linear infinite;
+            white-space: nowrap;
+        }
+
+        .ticker-item {
+            margin-right: 40px;
+            font-weight: 500;
+        }
+
+        .ticker-item a {
+            color: white;
+        }
+
+        .ticker-item a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes ticker {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
         /* Hero Section */
         .hero {
             background-color: var(--background-alt);
-            padding: 80px 0;
-            text-align: center;
+            padding: 60px 0;
         }
 
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+            align-items: center;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
             line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
         }
 
-        .hero p {
+        .hero-content p {
             font-size: 1.2rem;
             color: var(--text-light);
             margin-bottom: 30px;
         }
 
-        /* Section Titles */
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 40px;
+        .hero-image {
             position: relative;
-            display: inline-block;
+            height: 400px;
+            border-radius: var(--radius);
+            overflow: hidden;
         }
 
-        .section-title::after {
-            content: '';
+        .hero-image img {
             position: absolute;
-            bottom: -10px;
+            top: 0;
             left: 0;
-            width: 60px;
-            height: 3px;
-            background-color: var(--primary-color);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        /* Section Titles */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            color: var(--text-color);
+        }
+
+        .view-all {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         /* Featured Posts */
@@ -294,27 +430,28 @@
 
         .featured-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
         }
 
-        .featured-secondary {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
+        .featured-main {
+            grid-column: span 2;
         }
 
         .featured-card {
             border-radius: var(--radius);
             overflow: hidden;
-            background-color: var(--background);
+            background-color: var(--background-card);
             box-shadow: var(--card-shadow);
             transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .featured-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
         .card-image {
@@ -347,17 +484,22 @@
             padding: 5px 10px;
             border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: 500;
+            font-weight: 600;
+            z-index: 1;
         }
 
         .card-content {
             padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .featured-card h3 {
             font-size: 1.5rem;
             margin-bottom: 15px;
             line-height: 1.3;
+            font-weight: 700;
         }
 
         .featured-card.small h3 {
@@ -367,21 +509,42 @@
         .card-meta {
             display: flex;
             gap: 15px;
-            color: var(--text-light);
+            color: var(--text-lighter);
             font-size: 0.9rem;
             margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .author-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .author-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .author-name {
+            font-weight: 500;
+            color: var(--text-light);
         }
 
         .featured-card p {
             color: var(--text-light);
             margin-bottom: 20px;
+            flex: 1;
         }
 
         .read-more {
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            font-weight: 500;
+            font-weight: 600;
+            margin-top: auto;
         }
 
         .read-more svg {
@@ -392,10 +555,44 @@
             transform: translateX(5px);
         }
 
+        /* Trending Section */
+        .trending {
+            padding: 80px 0;
+            background-color: var(--background-alt);
+        }
+
+        .trending-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .trending-card {
+            background-color: var(--background-card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .trending-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .trending-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            opacity: 0.3;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+        }
+
         /* Blog List */
         .blog-list {
             padding: 80px 0;
-            background-color: var(--background-alt);
         }
 
         .blog-header {
@@ -421,6 +618,7 @@
             color: var(--text-light);
             font-size: 0.9rem;
             transition: var(--transition);
+            font-weight: 500;
         }
 
         .filter-controls button.active,
@@ -432,14 +630,14 @@
 
         .blog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
         }
 
         .blog-card {
             border-radius: var(--radius);
             overflow: hidden;
-            background-color: var(--background);
+            background-color: var(--background-card);
             box-shadow: var(--card-shadow);
             transition: var(--transition);
             height: 100%;
@@ -500,6 +698,7 @@
             border-radius: var(--radius);
             color: var(--text-color);
             transition: var(--transition);
+            font-weight: 500;
         }
 
         .pagination button:hover:not([disabled]) {
@@ -527,6 +726,7 @@
             border-radius: 50%;
             color: var(--text-color);
             transition: var(--transition);
+            font-weight: 500;
         }
 
         .page-numbers a.active,
@@ -547,35 +747,74 @@
         /* Newsletter */
         .newsletter {
             padding: 80px 0;
-            text-align: center;
+            background-color: var(--background-alt);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: rgba(99, 102, 241, 0.1);
+            z-index: 0;
+        }
+
+        .newsletter::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: rgba(244, 63, 94, 0.1);
+            z-index: 0;
         }
 
         .newsletter-content {
             max-width: 600px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            text-align: center;
         }
 
         .newsletter h2 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 15px;
+            font-weight: 800;
         }
 
         .newsletter p {
             color: var(--text-light);
             margin-bottom: 30px;
+            font-size: 1.1rem;
         }
 
         .newsletter-form {
             display: flex;
             gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
         .newsletter-form input {
             flex: 1;
-            padding: 12px 15px;
+            padding: 15px;
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
             font-size: 1rem;
+            background-color: var(--background-card);
+        }
+
+        .newsletter-form button {
+            padding: 0 25px;
+            font-weight: 600;
         }
 
         /* Footer */
@@ -596,10 +835,12 @@
             font-size: 1.8rem;
             color: var(--primary-color);
             margin-bottom: 15px;
+            font-weight: 800;
         }
 
         .footer-logo p {
             color: var(--text-light);
+            margin-bottom: 20px;
         }
 
         .footer-column h3 {
@@ -607,6 +848,7 @@
             margin-bottom: 20px;
             position: relative;
             display: inline-block;
+            font-weight: 700;
         }
 
         .footer-column h3::after {
@@ -624,11 +866,12 @@
         }
 
         .footer-column li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .footer-column a {
-            color: var(--text-light);
+            color: var (--text-light);
+            transition: var(--transition);
         }
 
         .footer-column a:hover {
@@ -638,6 +881,7 @@
         .social-links {
             display: flex;
             gap: 15px;
+            margin-top: 20px;
         }
 
         .social-links a {
@@ -655,6 +899,7 @@
         .social-links a:hover {
             background-color: var(--primary-color);
             color: white;
+            transform: translateY(-3px);
         }
 
         .footer-bottom {
@@ -676,14 +921,158 @@
             color: var(--text-light);
         }
 
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--background-card);
+            color: var(--text-color);
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-success {
+            border-left: 4px solid #10B981;
+        }
+
+        .toast-error {
+            border-left: 4px solid #EF4444;
+        }
+
+        .toast-icon {
+            color: #10B981;
+        }
+
+        .toast-error .toast-icon {
+            color: #EF4444;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        /* Loading Skeleton */
+        .skeleton {
+            background: linear-gradient(
+                90deg,
+                var(--background-alt) 25%,
+                var(--border-color) 50%,
+                var(--background-alt) 75%
+            );
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: var(--radius);
+        }
+
+        .skeleton-card {
+            border-radius: var(--radius);
+            overflow: hidden;
+            background-color: var(--background-card);
+            box-shadow: var(--card-shadow);
+            height: 100%;
+        }
+
+        .skeleton-image {
+            height: 200px;
+            width: 100%;
+        }
+
+        .skeleton-content {
+            padding: 20px;
+        }
+
+        .skeleton-title {
+            height: 24px;
+            margin-bottom: 15px;
+            width: 80%;
+        }
+
+        .skeleton-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .skeleton-meta-item {
+            height: 16px;
+            width: 80px;
+        }
+
+        .skeleton-text {
+            height: 16px;
+            margin-bottom: 10px;
+        }
+
+        .skeleton-text:last-child {
+            width: 60%;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
         /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .trending-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         @media (max-width: 992px) {
-            .featured-grid {
+            .hero-grid {
                 grid-template-columns: 1fr;
             }
             
-            .featured-secondary {
-                flex-direction: row;
+            .hero-image {
+                height: 300px;
+                order: -1;
+            }
+            
+            .featured-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .featured-main {
+                grid-column: span 2;
+            }
+            
+            .trending-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .footer-content {
@@ -692,26 +1081,27 @@
         }
 
         @media (max-width: 768px) {
-            .hero h1 {
+            .hero-content h1 {
                 font-size: 2.5rem;
             }
             
             .main-nav {
                 display: none;
-            }
-            
-            .main-nav.active {
-                display: block;
-                position: absolute;
+                position: fixed;
                 top: var(--header-height);
                 left: 0;
                 width: 100%;
                 background-color: var(--background);
                 padding: 20px;
                 box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                z-index: 99;
             }
             
-            .main-nav.active ul {
+            .main-nav.active {
+                display: block;
+            }
+            
+            .main-nav ul {
                 flex-direction: column;
                 gap: 15px;
             }
@@ -720,8 +1110,12 @@
                 display: flex;
             }
             
-            .featured-secondary {
-                flex-direction: column;
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-main {
+                grid-column: span 1;
             }
             
             .blog-header {
@@ -742,10 +1136,14 @@
                 gap: 15px;
                 text-align: center;
             }
+            
+            .footer-bottom-links {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 576px) {
-            .hero h1 {
+            .hero-content h1 {
                 font-size: 2rem;
             }
             
@@ -753,9 +1151,17 @@
                 font-size: 1.5rem;
             }
             
+            .trending-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .pagination {
                 flex-direction: column;
                 gap: 20px;
+            }
+            
+            .newsletter h2 {
+                font-size: 2rem;
             }
         }
     </style>
@@ -771,14 +1177,16 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <h1>Pulse</h1>
+                    <h1>TechPulse</h1>
                 </div>
                 <nav class="main-nav">
                     <ul>
                         <li><a href="#" class="active">Home</a></li>
-                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">Tech News</a></li>
+                        <li><a href="#">Reviews</a></li>
+                        <li><a href="#">Startups</a></li>
+                        <li><a href="#">AI</a></li>
                         <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
                     </ul>
                 </nav>
                 <div class="header-actions">
@@ -793,6 +1201,23 @@
         </div>
     </header>
 
+    <div class="breaking-news">
+        <div class="container">
+            <div class="ticker-container">
+                <div class="ticker-label">BREAKING</div>
+                <div class="ticker-wrapper">
+                    <div class="ticker">
+                        <div class="ticker-item"><a href="#">Apple unveils new M3 MacBook Pro with revolutionary performance gains</a></div>
+                        <div class="ticker-item"><a href="#">Google announces major AI breakthrough in natural language understanding</a></div>
+                        <div class="ticker-item"><a href="#">Tesla's new battery technology promises 500-mile range on a single charge</a></div>
+                        <div class="ticker-item"><a href="#">Microsoft acquires AI startup for $2.5 billion to enhance cloud services</a></div>
+                        <div class="ticker-item"><a href="#">SpaceX successfully launches 60 more Starlink satellites into orbit</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="search-overlay">
         <div class="container">
             <div class="search-header">
@@ -802,7 +1227,7 @@
                 </button>
             </div>
             <div class="search-form">
-                <input type="text" placeholder="Type to search...">
+                <input type="text" placeholder="Type to search..." id="search-input">
                 <button type="submit" aria-label="Submit search">
                     <i data-feather="search"></i>
                 </button>
@@ -813,62 +1238,155 @@
     <main>
         <section class="hero">
             <div class="container">
-                <div class="hero-content">
-                    <h1>Discover Insightful Articles & Stories</h1>
-                    <p>Explore our collection of thoughtfully crafted content on technology, lifestyle, and culture.</p>
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <h1>The Future of AI: How Machine Learning is Transforming Industries</h1>
+                        <p>Artificial intelligence is no longer science fiction. From healthcare to finance, AI is revolutionizing how businesses operate and how we live our daily lives.</p>
+                        <a href="#" class="btn">Read Full Story</a>
+                    </div>
+                    <div class="hero-image">
+                        <div class="hero-badge">Featured</div>
+                        <img src="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg" alt="AI Technology">
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="featured-posts">
             <div class="container">
-                <h2 class="section-title">Featured Posts</h2>
+                <div class="section-header">
+                    <h2 class="section-title">Featured Stories</h2>
+                    <a href="#" class="view-all">View All <i data-feather="arrow-right"></i></a>
+                </div>
                 <div class="featured-grid">
-                    <div class="featured-main">
-                        <article class="featured-card">
-                            <div class="card-image">
-                                <img src="https://source.unsplash.com/random/800x600/?technology" alt="Featured post">
-                                <div class="card-category">Technology</div>
-                            </div>
-                            <div class="card-content">
-                                <h3>The Future of AI in Everyday Life</h3>
-                                <div class="card-meta">
-                                    <span class="date">June 12, 2023</span>
-                                    <span class="reading-time">8 min read</span>
+                    <article class="featured-card featured-main">
+                        <div class="card-image">
+                            <img src="https://images.pexels.com/photos/7054528/pexels-photo-7054528.jpeg" alt="Metaverse">
+                            <div class="card-category">Metaverse</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>The Metaverse Economy: Virtual Real Estate Boom Creates New Millionaires</h3>
+                            <div class="card-meta">
+                                <div class="author-info">
+                                    <div class="author-avatar">
+                                        <img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg" alt="Author">
+                                    </div>
+                                    <span class="author-name">Sarah Johnson</span>
                                 </div>
-                                <p>Exploring how artificial intelligence is transforming our daily routines and what to expect in the coming years.</p>
-                                <a href="#" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                                <span class="date">May 15, 2025</span>
+                                <span class="reading-time">8 min read</span>
                             </div>
-                        </article>
-                    </div>
-                    <div class="featured-secondary">
-                        <article class="featured-card small">
-                            <div class="card-image">
-                                <img src="https://source.unsplash.com/random/400x300/?design" alt="Design post">
-                                <div class="card-category">Design</div>
-                            </div>
-                            <div class="card-content">
-                                <h3>Minimalism in Modern Web Design</h3>
-                                <div class="card-meta">
-                                    <span class="date">June 10, 2023</span>
-                                    <span class="reading-time">5 min read</span>
+                            <p>Virtual land sales are skyrocketing as major brands and investors rush to claim their space in the metaverse. We explore how this digital gold rush is creating a new class of digital property tycoons.</p>
+                            <a href="#" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                        </div>
+                    </article>
+                    <article class="featured-card">
+                        <div class="card-image">
+                            <img src="https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg" alt="Cybersecurity">
+                            <div class="card-category">Security</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Quantum Encryption: The Future of Cybersecurity</h3>
+                            <div class="card-meta">
+                                <div class="author-info">
+                                    <div class="author-avatar">
+                                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg" alt="Author">
+                                    </div>
+                                    <span class="author-name">Michael Chen</span>
                                 </div>
+                                <span class="date">May 12, 2025</span>
                             </div>
-                        </article>
-                        <article class="featured-card small">
-                            <div class="card-image">
-                                <img src="https://source.unsplash.com/random/400x300/?business" alt="Business post">
-                                <div class="card-category">Business</div>
-                            </div>
-                            <div class="card-content">
-                                <h3>Remote Work Revolution: The New Normal</h3>
-                                <div class="card-meta">
-                                    <span class="date">June 8, 2023</span>
-                                    <span class="reading-time">6 min read</span>
+                            <p>As quantum computing advances, traditional encryption methods become vulnerable. Learn how quantum encryption is stepping in to protect our digital future.</p>
+                            <a href="#" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                        </div>
+                    </article>
+                    <article class="featured-card">
+                        <div class="card-image">
+                            <img src="https://images.pexels.com/photos/8566526/pexels-photo-8566526.jpeg" alt="Robotics">
+                            <div class="card-category">Robotics</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Humanoid Robots Enter the Workforce: What This Means for Jobs</h3>
+                            <div class="card-meta">
+                                <div class="author-info">
+                                    <div class="author-avatar">
+                                        <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" alt="Author">
+                                    </div>
+                                    <span class="author-name">Emily Rodriguez</span>
                                 </div>
+                                <span class="date">May 10, 2025</span>
                             </div>
-                        </article>
-                    </div>
+                            <p>Advanced humanoid robots are now capable of performing complex tasks in warehouses, hospitals, and retail. We examine the economic and social implications.</p>
+                            <a href="#" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="trending">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Trending Now</h2>
+                    <a href="#" class="view-all">View All <i data-feather="arrow-right"></i></a>
+                </div>
+                <div class="trending-grid">
+                    <article class="trending-card">
+                        <div class="card-image">
+                            <div class="trending-number">1</div>
+                            <img src="https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg" alt="Smartphone">
+                            <div class="card-category">Gadgets</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Samsung's Foldable Phone Sales Surpass Traditional Flagships</h3>
+                            <div class="card-meta">
+                                <span class="date">May 14, 2025</span>
+                                <span class="reading-time">5 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="trending-card">
+                        <div class="card-image">
+                            <div class="trending-number">2</div>
+                            <img src="https://images.pexels.com/photos/3608542/pexels-photo-3608542.jpeg" alt="Electric Car">
+                            <div class="card-category">Transportation</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Electric Vehicles Now Cheaper to Produce Than Gas Cars</h3>
+                            <div class="card-meta">
+                                <span class="date">May 13, 2025</span>
+                                <span class="reading-time">6 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="trending-card">
+                        <div class="card-image">
+                            <div class="trending-number">3</div>
+                            <img src="https://images.pexels.com/photos/844124/pexels-photo-844124.jpeg" alt="Blockchain">
+                            <div class="card-category">Blockchain</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Central Banks Worldwide Adopt Blockchain for Digital Currencies</h3>
+                            <div class="card-meta">
+                                <span class="date">May 11, 2025</span>
+                                <span class="reading-time">7 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="trending-card">
+                        <div class="card-image">
+                            <div class="trending-number">4</div>
+                            <img src="https://images.pexels.com/photos/41162/moon-landing-apollo-11-nasa-buzz-aldrin-41162.jpeg" alt="Space">
+                            <div class="card-category">Space</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>First Commercial Space Hotel to Begin Construction Next Year</h3>
+                            <div class="card-meta">
+                                <span class="date">May 9, 2025</span>
+                                <span class="reading-time">8 min read</span>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -876,24 +1394,25 @@
         <section class="blog-list">
             <div class="container">
                 <div class="blog-header">
-                    <h2 class="section-title">All Blog Posts</h2>
+                    <h2 class="section-title">Latest Articles</h2>
                     <div class="filter-controls">
-                        <button class="active">All</button>
-                        <button>Technology</button>
-                        <button>Design</button>
-                        <button>Business</button>
-                        <button>Lifestyle</button>
+                        <button class="active" data-filter="all">All</button>
+                        <button data-filter="tech">Tech</button>
+                        <button data-filter="ai">AI</button>
+                        <button data-filter="startups">Startups</button>
+                        <button data-filter="gadgets">Gadgets</button>
+                        <button data-filter="software">Software</button>
                     </div>
                 </div>
                 
-                <div class="blog-grid">
+                <div class="blog-grid" id="blog-grid">
                     {% for blog in blogs %}
-                        <article class="blog-card">
+                        <article class="blog-card" data-category="{{ blog.category|lower }}">
                             <div class="card-image">
                                 {% if blog.image %}
                                     <img src="{{ blog.image }}" alt="{{ blog.title }}">
                                 {% else %}
-                                    <img src="https://source.unsplash.com/random/600x400/?blog" alt="{{ blog.title }}">
+                                    <img src="https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg" alt="{{ blog.title }}">
                                 {% endif %}
                                 {% if blog.category %}
                                     <div class="card-category">{{ blog.category }}</div>
@@ -902,6 +1421,14 @@
                             <div class="card-content">
                                 <h3>{{ blog.title }}</h3>
                                 <div class="card-meta">
+                                    {% if blog.author %}
+                                        <div class="author-info">
+                                            <div class="author-avatar">
+                                                <img src="{{ blog.author_image|default:'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg' }}" alt="{{ blog.author }}">
+                                            </div>
+                                            <span class="author-name">{{ blog.author }}</span>
+                                        </div>
+                                    {% endif %}
                                     {% if blog.date %}
                                         <span class="date">{{ blog.date }}</span>
                                     {% endif %}
@@ -910,15 +1437,146 @@
                                     {% endif %}
                                 </div>
                                 <p>{{ blog.content|truncatewords:30 }}</p>
-                                <a href="#" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                                {% if blog.pk %}
+                                    <a href="{% url 'article_detail' blog.pk %}" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                                {% endif %}
                             </div>
                         </article>
                     {% empty %}
-                        <div class="no-posts">
-                            <i data-feather="file-text" class="empty-icon"></i>
-                            <p>No blog posts available.</p>
-                            <a href="#" class="btn">Subscribe for updates</a>
-                        </div>
+                        <!-- Fallback content if no blogs are available -->
+                        <article class="blog-card" data-category="tech">
+                            <div class="card-image">
+                                <img src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg" alt="Software Development">
+                                <div class="card-category">Tech</div>
+                            </div>
+                            <div class="card-content">
+                                <h3>The Rise of Low-Code Development Platforms</h3>
+                                <div class="card-meta">
+                                    <div class="author-info">
+                                        <div class="author-avatar">
+                                            <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg" alt="Author">
+                                        </div>
+                                        <span class="author-name">David Park</span>
+                                    </div>
+                                    <span class="date">May 14, 2025</span>
+                                    <span class="reading-time">6 min read</span>
+                                </div>
+                                <p>Low-code platforms are democratizing software development, allowing non-technical users to build applications. This shift is transforming how businesses approach digital transformation and internal tools.</p>
+                                <a href="#" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card" data-category="ai">
+                            <div class="card-image">
+                                <img src="https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg" alt="AI Ethics">
+                                <div class="card-category">AI</div>
+                            </div>
+                            <div class="card-content">
+                                <h3>AI Ethics Boards: Are They Actually Making a Difference?</h3>
+                                <div class="card-meta">
+                                    <div class="author-info">
+                                        <div class="author-avatar">
+                                            <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" alt="Author">
+                                        </div>
+                                        <span class="author-name">Priya Sharma</span>
+                                    </div>
+                                    <span class="date">May 12, 2025</span>
+                                    <span class="reading-time">9 min read</span>
+                                </div>
+                                <p>As AI becomes more integrated into critical systems, ethics boards have been established to guide development. We investigate whether these oversight bodies are effective or merely corporate window dressing.</p>
+                                <a href="#" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card" data-category="startups">
+                            <div class="card-image">
+                                <img src="https://images.pexels.com/photos/7102/notes-macbook-study-conference.jpg" alt="Startup Funding">
+                                <div class="card-category">Startups</div>
+                            </div>
+                            <div class="card-content">
+                                <h3>Climate Tech Startups Secure Record $40 Billion in Funding</h3>
+                                <div class="card-meta">
+                                    <div class="author-info">
+                                        <div class="author-avatar">
+                                            <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg" alt="Author">
+                                        </div>
+                                        <span class="author-name">Alex Morgan</span>
+                                    </div>
+                                    <span class="date">May 10, 2025</span>
+                                    <span class="reading-time">7 min read</span>
+                                </div>
+                                <p>Venture capital is flowing into climate technology at unprecedented rates. From carbon capture to sustainable agriculture, we profile the hottest startups tackling the climate crisis.</p>
+                                <a href="#" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card" data-category="gadgets">
+                            <div class="card-image">
+                                <img src="https://images.pexels.com/photos/4065876/pexels-photo-4065876.jpeg" alt="Wearable Tech">
+                                <div class="card-category">Gadgets</div>
+                            </div>
+                            <div class="card-content">
+                                <h3>Smart Contact Lenses: The Next Frontier in Wearable Tech</h3>
+                                <div class="card-meta">
+                                    <div class="author-info">
+                                        <div class="author-avatar">
+                                            <img src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg" alt="Author">
+                                        </div>
+                                        <span class="author-name">James Wilson</span>
+                                    </div>
+                                    <span class="date">May 8, 2025</span>
+                                    <span class="reading-time">5 min read</span>
+                                </div>
+                                <p>Beyond smartwatches and rings, tech companies are developing contact lenses with built-in displays and health sensors. We look at the prototypes and potential applications of this revolutionary technology.</p>
+                                <a href="#" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card" data-category="software">
+                            <div class="card-image">
+                                <img src="https://images.pexels.com/photos/5380642/pexels-photo-5380642.jpeg" alt="Software">
+                                <div class="card-category">Software</div>
+                            </div>
+                            <div class="card-content">
+                                <h3>The End of Passwords: Biometric Authentication Takes Over</h3>
+                                <div class="card-meta">
+                                    <div class="author-info">
+                                        <div class="author-avatar">
+                                            <img src="https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg" alt="Author">
+                                        </div>
+                                        <span class="author-name">Lisa Zhang</span>
+                                    </div>
+                                    <span class="date">May 7, 2025</span>
+                                    <span class="reading-time">6 min read</span>
+                                </div>
+                                <p>Major tech platforms are phasing out traditional passwords in favor of biometric authentication methods. From facial recognition to behavioral biometrics, we explore the technologies making passwords obsolete.</p>
+                                <a href="#" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                            </div>
+                        </article>
+                        
+                        <article class="blog-card" data-category="tech">
+                            <div class="card-image">
+                                <img src="https://images.pexels.com/photos/2882552/pexels-photo-2882552.jpeg" alt="5G Technology">
+                                <div class="card-category">Tech</div>
+                            </div>
+                            <div class="card-content">
+                                <h3>6G Research Begins as 5G Deployment Reaches Global Milestone</h3>
+                                <div class="card-meta">
+                                    <div class="author-info">
+                                        <div class="author-avatar">
+                                            <img src="https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg" alt="Author">
+                                        </div>
+                                        <span class="author-name">Robert Kim</span>
+                                    </div>
+                                    <span class="date">May 5, 2025</span>
+                                    <span class="reading-time">7 min read</span>
+                                </div>
+                                <p>With 5G networks now covering 85% of the global population, researchers are already developing the next generation of wireless technology. We explore what 6G might offer and when we can expect it.</p>
+                                {% if blog.pk %}
+                                    <a href="{% url 'article_detail' blog.pk %}" class="read-more">Read Article <i data-feather="arrow-right"></i></a>
+                                {% endif %}
+                            </div>
+                        </article>
                     {% endfor %}
                 </div>
                 
@@ -939,9 +1597,9 @@
         <section class="newsletter">
             <div class="container">
                 <div class="newsletter-content">
-                    <h2>Stay Updated</h2>
-                    <p>Subscribe to our newsletter to receive the latest articles and updates.</p>
-                    <form class="newsletter-form">
+                    <h2>Stay Ahead of the Curve</h2>
+                    <p>Subscribe to our newsletter for exclusive tech insights, breaking news, and in-depth analysis delivered straight to your inbox.</p>
+                    <form class="newsletter-form" id="newsletter-form">
                         <input type="email" placeholder="Your email address" required>
                         <button type="submit" class="btn">Subscribe</button>
                     </form>
@@ -954,50 +1612,77 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <h2>Pulse</h2>
-                    <p>Insightful articles for curious minds.</p>
+                    <h2>TechPulse</h2>
+                    <p>Your trusted source for technology news, reviews, and insights.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter"><i data-feather="twitter"></i></a>
+                        <a href="#" aria-label="Facebook"><i data-feather="facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i data-feather="instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i data-feather="linkedin"></i></a>
+                        <a href="#" aria-label="YouTube"><i data-feather="youtube"></i></a>
+                    </div>
                 </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h3>Navigation</h3>
-                        <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Categories</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h3>Categories</h3>
-                        <ul>
-                            <li><a href="#">Technology</a></li>
-                            <li><a href="#">Design</a></li>
-                            <li><a href="#">Business</a></li>
-                            <li><a href="#">Lifestyle</a></li>
-                            <li><a href="#">Culture</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h3>Follow Us</h3>
-                        <div class="social-links">
-                            <a href="#" aria-label="Twitter"><i data-feather="twitter"></i></a>
-                            <a href="#" aria-label="Facebook"><i data-feather="facebook"></i></a>
-                            <a href="#" aria-label="Instagram"><i data-feather="instagram"></i></a>
-                            <a href="#" aria-label="LinkedIn"><i data-feather="linkedin"></i></a>
-                        </div>
-                    </div>
+                <div class="footer-column">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Tech News</a></li>
+                        <li><a href="#">Reviews</a></li>
+                        <li><a href="#">Startups</a></li>
+                        <li><a href="#">AI</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#">Artificial Intelligence</a></li>
+                        <li><a href="#">Blockchain & Crypto</a></li>
+                        <li><a href="#">Cloud Computing</a></li>
+                        <li><a href="#">Cybersecurity</a></li>
+                        <li><a href="#">Gadgets & Hardware</a></li>
+                        <li><a href="#">Software & Apps</a></li>
+                        <li><a href="#">Startups & VC</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Tech Guides</a></li>
+                        <li><a href="#">Podcasts</a></li>
+                        <li><a href="#">Newsletters</a></li>
+                        <li><a href="#">Events</a></li>
+                        <li><a href="#">Advertise</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 Pulse Blog. All rights reserved.</p>
+                <p>&copy; 2025 TechPulse. All rights reserved.</p>
                 <div class="footer-bottom-links">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                    <a href="#">Accessibility</a>
                 </div>
             </div>
         </div>
     </footer>
+
+    <div class="toast" id="toast">
+        <div class="toast-icon">
+            <i data-feather="check-circle"></i>
+        </div>
+        <div class="toast-content">
+            <div class="toast-title">Success!</div>
+            <div class="toast-message">You've successfully subscribed to our newsletter.</div>
+        </div>
+        <button class="toast-close" aria-label="Close notification">
+            <i data-feather="x"></i>
+        </button>
+    </div>
 
     <script>
         // Initialize Feather Icons
@@ -1011,40 +1696,42 @@
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
         const currentTheme = localStorage.getItem('theme');
 
-        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
-            document.body.classList.add('dark-mode');
-            themeIcon.setAttribute('data-feather', 'sun');
-        } else {
-            themeIcon.setAttribute('data-feather', 'moon');
-        }
-
-        // Update icons after setting initial state
-        feather.replace();
-
-        themeToggleBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            
-            if (document.body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
+        function setTheme(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-mode');
                 themeIcon.setAttribute('data-feather', 'sun');
             } else {
-                localStorage.setItem('theme', 'light');
+                document.body.classList.remove('dark-mode');
                 themeIcon.setAttribute('data-feather', 'moon');
             }
-            
             feather.replace();
+        }
+
+        // Set initial theme
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        // Toggle theme on button click
+        themeToggleBtn.addEventListener('click', () => {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            setTheme(!isDarkMode);
+            localStorage.setItem('theme', isDarkMode ? 'light' : 'dark');
         });
 
         // Search Functionality
         const searchToggle = document.querySelector('.search-toggle');
         const searchOverlay = document.querySelector('.search-overlay');
         const closeSearch = document.querySelector('.close-search');
+        const searchInput = document.getElementById('search-input');
 
         searchToggle.addEventListener('click', () => {
             searchOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
             setTimeout(() => {
-                searchOverlay.querySelector('input').focus();
+                searchInput.focus();
             }, 100);
         });
 
@@ -1056,6 +1743,21 @@
         // Close search on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+                searchOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Search form submission
+        const searchForm = document.querySelector('.search-form');
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const searchTerm = searchInput.value.trim();
+            
+            if (searchTerm) {
+                // In a real implementation, this would redirect to search results
+                // For demo purposes, we'll just show a toast notification
+                showToast('Search submitted', `Searching for: "${searchTerm}"`, 'info');
                 searchOverlay.classList.remove('active');
                 document.body.style.overflow = '';
             }
@@ -1079,6 +1781,8 @@
 
         // Filter Controls
         const filterButtons = document.querySelectorAll('.filter-controls button');
+        const blogGrid = document.getElementById('blog-grid');
+        const blogCards = document.querySelectorAll('.blog-card');
 
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -1088,15 +1792,60 @@
                 // Add active class to clicked button
                 button.classList.add('active');
                 
-                // Here you would typically filter the blog posts
-                // For demonstration, we'll just log the category
-                console.log(`Filtering by: ${button.textContent}`);
+                // Get the filter value
+                const filter = button.getAttribute('data-filter');
+                
+                // Filter the blog posts
+                blogCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Check if there are any visible cards
+                const visibleCards = [...blogCards].filter(card => card.style.display !== 'none');
+                
+                if (visibleCards.length === 0) {
+                    // If no cards are visible, show a message
+                    const noPostsElement = document.createElement('div');
+                    noPostsElement.className = 'no-posts';
+                    noPostsElement.innerHTML = `
+                        <i data-feather="file-text" class="empty-icon"></i>
+                        <p>No articles found in this category.</p>
+                        <button class="btn" data-filter="all">View All Articles</button>
+                    `;
+                    
+                    // Remove any existing no-posts element
+                    const existingNoPostsElement = blogGrid.querySelector('.no-posts');
+                    if (existingNoPostsElement) {
+                        blogGrid.removeChild(existingNoPostsElement);
+                    }
+                    
+                    blogGrid.appendChild(noPostsElement);
+                    feather.replace();
+                    
+                    // Add event listener to the "View All Articles" button
+                    const viewAllButton = noPostsElement.querySelector('button');
+                    viewAllButton.addEventListener('click', () => {
+                        // Click the "All" filter button
+                        const allButton = document.querySelector('.filter-controls button[data-filter="all"]');
+                        allButton.click();
+                    });
+                } else {
+                    // If there are visible cards, remove any no-posts element
+                    const noPostsElement = blogGrid.querySelector('.no-posts');
+                    if (noPostsElement) {
+                        blogGrid.removeChild(noPostsElement);
+                    }
+                }
             });
         });
 
         // Add animation on scroll
         const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.blog-card, .featured-card');
+            const elements = document.querySelectorAll('.blog-card, .featured-card, .trending-card');
             
             elements.forEach(element => {
                 const elementPosition = element.getBoundingClientRect().top;
@@ -1110,7 +1859,7 @@
         };
 
         // Initialize elements with opacity 0
-        document.querySelectorAll('.blog-card, .featured-card').forEach(element => {
+        document.querySelectorAll('.blog-card, .featured-card, .trending-card').forEach(element => {
             element.style.opacity = '0';
             element.style.transform = 'translateY(20px)';
             element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
@@ -1129,7 +1878,7 @@
         };
 
         // Newsletter form submission
-        const newsletterForm = document.querySelector('.newsletter-form');
+        const newsletterForm = document.getElementById('newsletter-form');
 
         if (newsletterForm) {
             newsletterForm.addEventListener('submit', (e) => {
@@ -1138,12 +1887,210 @@
                 
                 if (email) {
                     // Here you would typically send the email to your server
-                    // For demonstration, we'll just show an alert
-                    alert(`Thank you for subscribing with: ${email}`);
+                    // For demonstration, we'll just show a toast notification
+                    showToast('Success!', 'You\'ve successfully subscribed to our newsletter.', 'success');
                     newsletterForm.reset();
                 }
             });
         }
+
+        // Toast notification
+        const toast = document.getElementById('toast');
+        let toastTimeout;
+
+        const showToast = (title, message, type = 'success') => {
+            // Clear any existing timeout
+            if (toastTimeout) {
+                clearTimeout(toastTimeout);
+            }
+            
+            // Set toast content
+            toast.querySelector('.toast-title').textContent = title;
+            toast.querySelector('.toast-message').textContent = message;
+            
+            // Set toast type
+            toast.className = 'toast';
+            toast.classList.add(`toast-${type}`);
+            
+            // Set icon based on type
+            const iconElement = toast.querySelector('.toast-icon i');
+            if (type === 'success') {
+                iconElement.setAttribute('data-feather', 'check-circle');
+            } else if (type === 'error') {
+                iconElement.setAttribute('data-feather', 'alert-circle');
+            } else if (type === 'info') {
+                iconElement.setAttribute('data-feather', 'info');
+            }
+            
+            // Update feather icons
+            feather.replace();
+            
+            // Show toast
+            toast.classList.add('show');
+            
+            // Hide toast after 5 seconds
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
+        };
+
+        // Close toast on click
+        const toastClose = toast.querySelector('.toast-close');
+        toastClose.addEventListener('click', () => {
+            toast.classList.remove('show');
+        });
+
+        // Breaking news ticker - clone items for continuous scrolling
+        const ticker = document.querySelector('.ticker');
+        if (ticker) {
+            const tickerItems = ticker.querySelectorAll('.ticker-item');
+            tickerItems.forEach(item => {
+                const clone = item.cloneNode(true);
+                ticker.appendChild(clone);
+            });
+        }
+
+        // Pagination functionality
+        const paginationPrev = document.querySelector('.pagination .prev');
+        const paginationNext = document.querySelector('.pagination .next');
+        const pageNumbers = document.querySelectorAll('.page-numbers a');
+
+        pageNumbers.forEach(page => {
+            page.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Remove active class from all page numbers
+                pageNumbers.forEach(p => p.classList.remove('active'));
+                
+                // Add active class to clicked page number
+                page.classList.add('active');
+                
+                // Enable/disable prev/next buttons based on active page
+                if (page.textContent === '1') {
+                    paginationPrev.setAttribute('disabled', '');
+                } else {
+                    paginationPrev.removeAttribute('disabled');
+                }
+                
+                if (page.textContent === '10') {
+                    paginationNext.setAttribute('disabled', '');
+                } else {
+                    paginationNext.removeAttribute('disabled');
+                }
+                
+                // In a real implementation, this would load the next page of content
+                // For demo purposes, we'll just scroll to the top of the blog list
+                const blogList = document.querySelector('.blog-list');
+                blogList.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        paginationPrev.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Find the currently active page
+            const activePage = document.querySelector('.page-numbers a.active');
+            const activeIndex = Array.from(pageNumbers).indexOf(activePage);
+            
+            // If not the first page, go to previous page
+            if (activeIndex > 0) {
+                pageNumbers[activeIndex - 1].click();
+            }
+        });
+
+        paginationNext.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Find the currently active page
+            const activePage = document.querySelector('.page-numbers a.active');
+            const activeIndex = Array.from(pageNumbers).indexOf(activePage);
+            
+            // If not the last page, go to next page
+            if (activeIndex < pageNumbers.length - 1) {
+                pageNumbers[activeIndex + 1].click();
+            }
+        });
+
+        // Simulate loading state for demonstration
+        const simulateLoading = () => {
+            // Create skeleton loaders
+            const blogGrid = document.getElementById('blog-grid');
+            const originalContent = blogGrid.innerHTML;
+            
+            // Replace with skeleton loaders
+            let skeletonHTML = '';
+            for (let i = 0; i < 6; i++) {
+                skeletonHTML += `
+                    <div class="skeleton-card">
+                        <div class="skeleton skeleton-image"></div>
+                        <div class="skeleton-content">
+                            <div class="skeleton skeleton-title"></div>
+                            <div class="skeleton-meta">
+                                <div class="skeleton skeleton-meta-item"></div>
+                                <div class="skeleton skeleton-meta-item"></div>
+                            </div>
+                            <div class="skeleton skeleton-text"></div>
+                            <div class="skeleton skeleton-text"></div>
+                            <div class="skeleton skeleton-text"></div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Show loading state
+            blogGrid.innerHTML = skeletonHTML;
+            
+            // After a delay, restore original content
+            setTimeout(() => {
+                blogGrid.innerHTML = originalContent;
+                
+                // Re-initialize feather icons
+                feather.replace();
+                
+                // Re-attach event listeners
+                attachEventListeners();
+                
+                // Re-run animations
+                animateOnScroll();
+            }, 1500);
+        };
+
+        // Function to reattach event listeners after content is replaced
+        const attachEventListeners = () => {
+            // Reattach filter button event listeners
+            const newFilterButtons = document.querySelectorAll('.filter-controls button');
+            newFilterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    newFilterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Get the filter value
+                    const filter = button.getAttribute('data-filter');
+                    
+                    // Filter the blog posts
+                    const newBlogCards = document.querySelectorAll('.blog-card');
+                    newBlogCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        };
+
+        // Simulate loading when clicking on pagination or filter buttons
+        document.querySelectorAll('.pagination button, .filter-controls button').forEach(button => {
+            button.addEventListener('click', () => {
+                if (!button.hasAttribute('disabled')) {
+                    simulateLoading();
+                }
+            });
+        });
     </script>
 </body>
 </html>
