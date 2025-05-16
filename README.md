@@ -146,14 +146,7 @@ This project is for educational and demonstration purposes under industrial trai
 
 ---
 
-✅ **Final Step**  
-Paste that into your `README.md` file in VS Code, save it, commit it, and push to GitHub like this:
 
-```bash
-git add README.md
-git commit -m "Add professional README"
-git push origin main
-````
 
 Want a `requirements.txt` generated automatically for your project? Just say the word.
 
