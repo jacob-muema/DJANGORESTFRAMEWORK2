@@ -105,6 +105,11 @@ pip install djangorestframework
 ![Blog Page](https://github.com/user-attachments/assets/50886155-bc6d-4016-a5db-a960604df47a)
 ![Blog Page 2](https://github.com/user-attachments/assets/d91ced7a-5e9e-4e73-a19c-98ca52b9755f)
 
+![Register Page](https://github.com/user-attachments/assets/75706799-b7b4-4b92-aded-7ecb71ca0e33)
+![Login Page](https://github.com/user-attachments/assets/9d304678-84e1-48f3-9d78-0694d1836456)
+![Blog Page](https://github.com/user-attachments/assets/e16c405e-1e1f-44d7-b6ed-d54590751c01)
+
+
 ---
 
 ## 🏢 Built At
